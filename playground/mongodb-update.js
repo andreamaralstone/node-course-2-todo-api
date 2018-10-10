@@ -38,8 +38,12 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,db)=>{
             _id: new ObjectID("5bbe5f9d1aaee27d01a8792e")
         },
         {
-            $set:{name: "Ananda"},
-            $inc:{age:1}
+            $set: {
+                name: "Ananda"
+            },
+            $inc: {
+                age:1
+            }
         },
         {
             returnOriginal: false
