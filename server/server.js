@@ -13,18 +13,32 @@ app.use(bodyParser.json()); //bodyParser.json() is the middleware function
 
 app.post('/todos',(req,res)=>{
     // for creating a new todo
-    console.log(req.body);
-    var todo = new Todo({
+
+    var newTodo = new Todo({
         text: req.body.text,
         completed: req.body.completed,
         completedAt: req.body.completedAt
-
     })
 
-    todo.save().then((doc)=>{
+    newTodo.save().then((doc)=>{
         res.send(doc);
     },(e)=>{
         res.status(400).send(e);
+    })
+})
+
+
+app.get("/todos",(req,res)=>{
+    // for consulting a todo
+    
+    Todo.find({text:"VAI CURINTIA!"}).then((todos)=>{
+        res.send(
+            {
+                todos
+            }
+        )
+    },(e)=>{
+        res.status(400).send(e)
     })
 })
 
