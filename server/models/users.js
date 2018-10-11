@@ -6,6 +6,16 @@ var Users = mongoose.model('Users',{
         required: true,
         minlength: 1,
         trim: true
+    },
+    login:{
+        type:String,
+        required: true,
+        minlength: 5
+    },
+    password:{
+        type:String,
+        required: true,
+        minlength: 8
     }
 });
 
