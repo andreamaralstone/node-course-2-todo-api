@@ -30,8 +30,9 @@ app.post('/todos',(req,res)=>{
 
 app.get("/todos",(req,res)=>{
     // for consulting a todo
-    
-    Todo.find({text:"VAI CURINTIA!"}).then((todos)=>{
+    //var text = req.body.text
+    //Todo.find({text:"VAI CURINTIA!"}).then((todos)=>{
+    Todo.find().then((todos)=>{
         res.send(
             {
                 todos
