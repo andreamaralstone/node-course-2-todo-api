@@ -89,7 +89,7 @@ app.delete('/todos/:id',(req,res)=>{
             //if doc, send doc back with 200
             console.log("ID ", deleteID," SUCCESSFULLY DELETED");
             console.log(doc);
-            return res.status(200).send({todos:doc})
+            return res.status(200).send({todo:doc})
             }
     }).catch((e)=> {
         //error
