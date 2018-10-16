@@ -1,16 +1,13 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-
-var {ObjectID} = require('mongodb');
-var {mongoose} = require('./db/mongoose');
-
-var {Todo} = require('./models/todos');
-
-var {Users} = require('./models/users');
-
-var app = express();
-
+const express = require('express');
+const bodyParser = require('body-parser');
+const {ObjectID} = require('mongodb');
 const port = process.env.PORT || 3000;
+const _ = require('lodash');
+
+var {mongoose} = require('./db/mongoose');
+var {Todo} = require('./models/todos');
+var {Users} = require('./models/users');
+var app = express();
 
 app.use(bodyParser.json()); //bodyParser.json() is the middleware function
 
@@ -95,6 +92,32 @@ app.delete('/todos/:id',(req,res)=>{
         //error
             //400 with empty body
         return res.status(400).send()
+    })
+})
+
+app.patch('/todos/:id',(req,res)=>{
+    var UpdateID = req.params.id;
+    var body = _.pick(req.body,['text','completed']);
+
+    if(!ObjectID.isValid(UpdateID)){
+        console.log("ID not valid");
+        return res.status(404).send({})
+    }
+
+    if(_.isBoolean(body.completed) && body.completed){
+        body.completedAt = new Date().getTime();    // getTime() returns a JS timestamp
+    } else {
+        body.completed = false;
+        body.completedAt = null;
+    }
+
+    Todo.findByIdAndUpdate(UpdateID,{$set:body},{new: true}).then((todo)=>{
+        if(!todo){
+            return res.status(404).send();
+        }
+        res.send({todo});
+    }).catch((e)=>{
+        res.status(400).send();
     })
 })
 
