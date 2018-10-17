@@ -5,7 +5,6 @@ const {ObjectID} = require('mongodb');
 const port = process.env.PORT;
 const _ = require('lodash');
 
-
 var {mongoose} = require('./db/mongoose');
 var {Todo} = require('./models/todos');
 var {Users} = require('./models/users');
